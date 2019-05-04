@@ -11,7 +11,7 @@ import com.cyb.dubbo.api.service.HelloService;
 @RestController
 public class HelloController {
 	
-	@Reference(url = "dubbo://127.0.0.1:12345")
+	@Reference
 	private HelloService helloService;
 
 	@GetMapping("sayHello")

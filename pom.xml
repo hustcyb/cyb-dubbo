@@ -8,7 +8,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}></maven.compiler.target>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<cyb-dubbo.version>1.0.0-SNAPSHOT</cyb-dubbo.version>
 		<spring-boot.version>2.1.4.RELEASE</spring-boot.version>
 		<dubbo.version>2.7.1</dubbo.version>
@@ -24,14 +24,39 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo-dependencies-bom</artifactId>
+				<version>${dubbo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
 				<artifactId>dubbo-spring-boot-starter</artifactId>
 				<version>${dubbo.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo-dependencies-zookeeper</artifactId>
+				<version>${dubbo.version}</version>
+				<type>pom</type>
+			</dependency>
 			<dependency>
 				<groupId>com.cyb</groupId>
 				<artifactId>cyb-dubbo-api</artifactId>
@@ -40,6 +65,11 @@
 			<dependency>
 				<groupId>com.cyb</groupId>
 				<artifactId>cyb-dubbo-provider</artifactId>
+				<version>${cyb-dubbo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.cyb</groupId>
+				<artifactId>cyb-dubbo-consumer</artifactId>
 				<version>${cyb-dubbo.version}</version>
 			</dependency>
 		</dependencies>
