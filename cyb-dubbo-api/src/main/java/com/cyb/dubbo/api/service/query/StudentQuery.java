@@ -1,8 +1,12 @@
 package com.cyb.dubbo.api.service.query;
 
+import java.io.Serializable;
+
 import javax.ws.rs.QueryParam;
 
-public class StudentQuery {
+public class StudentQuery implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@QueryParam("name")
 	private String name;

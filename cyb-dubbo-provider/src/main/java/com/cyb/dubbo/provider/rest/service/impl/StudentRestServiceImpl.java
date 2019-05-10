@@ -1,4 +1,4 @@
-package com.cyb.dubbo.provider.rest.service;
+package com.cyb.dubbo.provider.rest.service.impl;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.cyb.dubbo.provider.service;
+package com.cyb.dubbo.provider.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
