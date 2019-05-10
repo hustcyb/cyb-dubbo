@@ -7,6 +7,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>cyb-dubbo-provider</artifactId>
+	<properties>
+		<tomcat.version>8.5.32</tomcat.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.cyb</groupId>
@@ -25,21 +28,44 @@
 			<artifactId>dubbo</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>org.apache.dubbo</groupId>
-		  <artifactId>dubbo-dependencies-zookeeper</artifactId>
-		  <type>pom</type>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-dependencies-zookeeper</artifactId>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
-	   <plugins>
-	       <plugin>
-	           <groupId>org.springframework.boot</groupId>
-	           <artifactId>spring-boot-maven-plugin</artifactId>
-	       </plugin>
-	       <plugin>
-	           <groupId>com.spotify</groupId>
-	           <artifactId>dockerfile-maven-plugin</artifactId>
-	       </plugin>
-	   </plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 	</build>
 </project>

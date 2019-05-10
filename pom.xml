@@ -12,6 +12,7 @@
 		<cyb-dubbo.version>1.0.0-SNAPSHOT</cyb-dubbo.version>
 		<spring-boot.version>2.1.4.RELEASE</spring-boot.version>
 		<dubbo.version>2.7.1</dubbo.version>
+		<resteasy.version>3.0.19.Final</resteasy.version>
 		<dockerfile-maven-plugin.version>1.4.9</dockerfile-maven-plugin.version>
 		<docker.image.prefix>hustcyb</docker.image.prefix>
 	</properties>
@@ -28,6 +29,8 @@
 				<groupId>org.apache.dubbo</groupId>
 				<artifactId>dubbo-dependencies-bom</artifactId>
 				<version>${dubbo.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.dubbo</groupId>
@@ -60,6 +63,11 @@
 				<type>pom</type>
 			</dependency>
 			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jackson2-provider</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>com.cyb</groupId>
 				<artifactId>cyb-dubbo-api</artifactId>
 				<version>${cyb-dubbo.version}</version>
@@ -77,43 +85,43 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-	   <pluginManagement>
-	       <plugins>
-	           <plugin>
-	               <groupId>org.springframework.boot</groupId>
-	               <artifactId>spring-boot-maven-plugin</artifactId>
-	               <executions>
-	                   <execution>
-	                       <goals>
-	                           <goal>repackage</goal>
-	                       </goals>
-	                   </execution>
-	               </executions>
-	           </plugin>
-	           <plugin>
-	               <groupId>com.spotify</groupId>
-	               <artifactId>dockerfile-maven-plugin</artifactId>
-	               <version>${dockerfile-maven-plugin.version}</version>
-	               <executions>
-	                   <execution>
-	                       <id>default</id>
-	                       <goals>
-	                           <goal>build</goal>
-	                           <goal>push</goal>
-	                       </goals>
-	                   </execution>
-	               </executions>
-	               <configuration>
-	                   <repository>${docker.image.prefix}/${project.artifactId}</repository>
-	                   <tag>${project.version}</tag>
-	                   <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-	                   <buildArgs>
-	                       <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-	                   </buildArgs>
-	               </configuration>
-	           </plugin>
-	       </plugins>
-	   </pluginManagement>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.spotify</groupId>
+					<artifactId>dockerfile-maven-plugin</artifactId>
+					<version>${dockerfile-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>default</id>
+							<goals>
+								<goal>build</goal>
+								<goal>push</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<repository>${docker.image.prefix}/${project.artifactId}</repository>
+						<tag>${project.version}</tag>
+						<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+						<buildArgs>
+							<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+						</buildArgs>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<modules>
 		<module>cyb-dubbo-api</module>
