@@ -18,7 +18,7 @@ public class StudentRestServiceImpl implements StudentRestService {
 
 	@Override
 	public List<StudentDTO> listByQuery(StudentQuery query) {
-		return studentService.listbyQuery(query);
+		return studentService.listByQuery(query);
 	}
 
 	@Override

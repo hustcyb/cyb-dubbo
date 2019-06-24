@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
 	private static Map<Integer, StudentDTO> students = new HashMap<>();
 
 	@Override
-	public List<StudentDTO> listbyQuery(StudentQuery query) {
+	public List<StudentDTO> listByQuery(StudentQuery query) {
 		List<StudentDTO> matchedStudents = new ArrayList<>();
 		
 		for (StudentDTO student: students.values()) {

@@ -7,7 +7,7 @@ import com.cyb.dubbo.api.service.query.StudentQuery;
 
 public interface StudentService {
 
-	List<StudentDTO> listbyQuery(StudentQuery query);
+	List<StudentDTO> listByQuery(StudentQuery query);
 
 	StudentDTO getById(Integer id);
 

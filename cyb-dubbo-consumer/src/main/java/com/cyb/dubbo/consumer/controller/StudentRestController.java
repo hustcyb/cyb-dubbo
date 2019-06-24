@@ -11,34 +11,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cyb.dubbo.api.service.StudentService;
+import com.cyb.dubbo.api.rest.service.StudentRestService;
 import com.cyb.dubbo.api.service.dto.StudentDTO;
 import com.cyb.dubbo.api.service.query.StudentQuery;
 
-@RequestMapping("students")
+@RequestMapping("rest/students")
 @RestController
-public class HelloController {
-	
-	@Reference
-	private StudentService studentService;
+public class StudentRestController {
+
+	@Reference(url = "rest://localhost:1080/cyb-dubbo-provider/")
+	private StudentRestService studentRestService;
 
 	@GetMapping
 	public List<StudentDTO> listByQuery(StudentQuery query) {
-		return studentService.listbyQuery(query);
+		return studentRestService.listByQuery(query);
 	}
 	
 	@GetMapping("{id}")
 	public StudentDTO getById(@PathVariable Integer id) {
-		return studentService.getById(id);
+		return studentRestService.getById(id);
 	}
 	
 	@PostMapping
 	public Integer save(@RequestBody StudentDTO student) {
-		return studentService.save(student);
+		return studentRestService.save(student);
 	}
 	
 	@PutMapping
 	public void update(StudentDTO student) {
-		studentService.update(student);
+		studentRestService.update(student);
 	}
 }
