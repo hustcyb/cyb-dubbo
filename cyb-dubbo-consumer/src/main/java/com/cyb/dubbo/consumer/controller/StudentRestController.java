@@ -19,7 +19,7 @@ import com.cyb.dubbo.api.service.query.StudentQuery;
 @RestController
 public class StudentRestController {
 
-	@Reference(url = "rest://localhost:1080/cyb-dubbo-provider/")
+	@Reference(protocol = "rest")
 	private StudentRestService studentRestService;
 
 	@GetMapping
