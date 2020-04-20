@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.cyb.dubbo.api.service.dto.StudentDTO;
+import com.cyb.dubbo.api.service.query.StudentIdsQuery;
 import com.cyb.dubbo.api.service.query.StudentQuery;
 
 @Path("students")
@@ -21,15 +22,19 @@ public interface StudentRestService {
 
 	@GET
 	List<StudentDTO> listByQuery(@BeanParam StudentQuery query);
-	
+
 	@GET
-	@Path("{id}")
+	@Path("{ids:\\d?,[\\d,]*}")
+	List<StudentDTO> listByIds(@PathParam("ids") StudentIdsQuery query);
+
+	@GET
+	@Path("{id:\\d+}")
 	StudentDTO getById(@PathParam("id") Integer id);
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	Integer save(StudentDTO student);
-	
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	void update(StudentDTO student);

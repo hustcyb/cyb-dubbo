@@ -1,13 +1,16 @@
 package com.cyb.dubbo.provider.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.StringUtils;
 
 import com.cyb.dubbo.api.service.StudentService;
 import com.cyb.dubbo.api.service.dto.StudentDTO;
@@ -15,35 +18,19 @@ import com.cyb.dubbo.api.service.query.StudentQuery;
 
 @Service(protocol = "dubbo")
 public class StudentServiceImpl implements StudentService {
-	
+
 	private static Map<Integer, StudentDTO> students = new HashMap<>();
 
 	@Override
 	public List<StudentDTO> listByQuery(StudentQuery query) {
-		List<StudentDTO> matchedStudents = new ArrayList<>();
-		
-		for (StudentDTO student: students.values()) {
-			String studentName = student.getName();
-			String queryName = query.getName();
-			if (queryName != null && !Objects.equals(queryName, studentName)) {
-				continue;
-			}
-			
-			Byte age = student.getAge();
-			Byte minAge = query.getMinAge();
-			Byte maxAge = query.getMaxAge();
-			if (minAge != null && (age == null || age < minAge)) {
-				continue;
-			}
-			
-			if (maxAge != null && (age == null || age > maxAge)) {
-				continue;
-			}
-			
-			matchedStudents.add(student);
-		}
-		
-		return matchedStudents;
+		return students.values().stream().filter(student -> match(student, query))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<StudentDTO> listByIds(Collection<Integer> ids) {
+		return ids.stream().map(students::get).filter(Objects::nonNull)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -55,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
 	public Integer save(StudentDTO student) {
 		Integer id = student.getId();
 		students.put(id, student);
-		
+
 		return id;
 	}
 
@@ -66,6 +53,22 @@ public class StudentServiceImpl implements StudentService {
 		if (updatingStudent != null) {
 			BeanUtils.copyProperties(student, updatingStudent);
 		}
+	}
+	
+	private static boolean match(StudentDTO student, StudentQuery query) {
+		if (!StringUtils.isEmpty(query.getName()) && !Objects.equals(student.getName(), query.getName())) {
+			return false;
+		}
+		
+		if (query.getMinAge() != null && student.getAge() < query.getMinAge()) {
+			return false;
+		}
+		
+		if (query.getMaxAge() != null && student.getAge() > query.getMaxAge()) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
