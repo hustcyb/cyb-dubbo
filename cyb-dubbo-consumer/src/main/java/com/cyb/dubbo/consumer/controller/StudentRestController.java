@@ -1,5 +1,6 @@
 package com.cyb.dubbo.consumer.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.dubbo.config.annotation.Reference;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cyb.dubbo.api.rest.service.StudentRestService;
 import com.cyb.dubbo.api.service.dto.StudentDTO;
+import com.cyb.dubbo.api.service.query.StudentIdsQuery;
 import com.cyb.dubbo.api.service.query.StudentQuery;
 
 @RequestMapping("rest/students")
@@ -27,9 +29,15 @@ public class StudentRestController {
 		return studentRestService.listByQuery(query);
 	}
 	
-	@GetMapping("{id}")
+	@GetMapping("{id:\\d+}")
 	public StudentDTO getById(@PathVariable Integer id) {
 		return studentRestService.getById(id);
+	}
+	
+	@GetMapping("{ids:\\d*,[\\d,]*}")
+	public List<StudentDTO> listByIds(@PathVariable Collection<Integer> ids) {
+		StudentIdsQuery query = new StudentIdsQuery(ids);
+		return studentRestService.listByIds(query);
 	}
 	
 	@PostMapping
@@ -38,7 +46,7 @@ public class StudentRestController {
 	}
 	
 	@PutMapping
-	public void update(StudentDTO student) {
+	public void update(@RequestBody StudentDTO student) {
 		studentRestService.update(student);
 	}
 }

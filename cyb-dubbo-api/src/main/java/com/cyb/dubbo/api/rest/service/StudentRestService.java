@@ -24,7 +24,7 @@ public interface StudentRestService {
 	List<StudentDTO> listByQuery(@BeanParam StudentQuery query);
 
 	@GET
-	@Path("{ids:\\d?,[\\d,]*}")
+	@Path("{ids:\\d*,[\\d,]*}")
 	List<StudentDTO> listByIds(@PathParam("ids") StudentIdsQuery query);
 
 	@GET

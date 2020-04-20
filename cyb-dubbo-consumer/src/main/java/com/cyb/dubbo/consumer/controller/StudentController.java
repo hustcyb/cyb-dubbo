@@ -1,5 +1,6 @@
 package com.cyb.dubbo.consumer.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.dubbo.config.annotation.Reference;
@@ -27,9 +28,14 @@ public class StudentController {
 		return studentService.listByQuery(query);
 	}
 	
-	@GetMapping("{id}")
+	@GetMapping("{id:\\d+}")
 	public StudentDTO getById(@PathVariable Integer id) {
 		return studentService.getById(id);
+	}
+	
+	@GetMapping("{ids:\\d*,[\\d,]*}")
+	public List<StudentDTO> listByIds(@PathVariable Collection<Integer> ids) {
+		return studentService.listByIds(ids);
 	}
 	
 	@PostMapping
@@ -38,7 +44,7 @@ public class StudentController {
 	}
 	
 	@PutMapping
-	public void update(StudentDTO student) {
+	public void update(@RequestBody StudentDTO student) {
 		studentService.update(student);
 	}
 }
